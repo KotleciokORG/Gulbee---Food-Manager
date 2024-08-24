@@ -1,0 +1,12 @@
+GET http://localhost:5109/products
+
+###
+
+GET http://localhost:5109/products/2
+
+###
+
+POST http://localhost:5109/products
+
+
+###

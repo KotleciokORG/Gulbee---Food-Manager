@@ -1,57 +1,59 @@
 using Gulbee.Api.Data;
 using Gulbee.Api.Dto;
+using Gulbee.Api.Entities;
+using Gulbee.Api.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gulbee.Api.Endpoints;
 
 public static class ProductEndpoints{
 
+    private static string GetProductEndointName = "GetProduct";
     public static  async WebApplication MapProductEndpoints(this WebApplication app){
         var prodGroup = app.MapGroup("products");
 
         prodGroup.MapGet("/", async (GulbeeContext dbContext) => 
         {
-            return await dbContext.Products.
+            return await dbContext.Products
+                        .Select((Product p) => p.ToGetDto())
+                        .AsNoTracking()
+                        .ToListAsync(); 
         });
 
-        prodGroup.MapGet("/{id}", (int id) => produkty.Find(prod => prod.Id == id));
+        prodGroup.MapGet("/{id}", async (int id, GulbeeContext dbContext) => 
+        {
+            Product? product = await dbContext.Products.FindAsync(id);
+            return product is null ? 
+                Results.NotFound() : Results.Ok(product.ToGetDto());
+        }).WithName(GetProductEndointName);
 
-        prodGroup.MapPost("/", (ProductPostDto productPostDto) => produkty.Add(
-            new ProductGetDto(){
-                Id = productPostDto.Id,
-                Name = productPostDto.Name,
-                Kcal = productPostDto.Kcal,
-                Carbo = productPostDto.Carbo,
-                Fat = productPostDto.Fat,
-                Proteins = productPostDto.Proteins,
-                Salt = productPostDto.Salt,
-                Sugar = productPostDto.Sugar,
-                Category = "Owoc"
-            }
-        ));
+        prodGroup.MapPost("/", async (ProductPostDto productPostDto, GulbeeContext dbContext) => 
+        {
+            Product product = productPostDto.ToEntity();
 
-        prodGroup.MapPut("/{id}", (int id, ProductUpdateDto productUpdateDto) => 
-            {
-                var replaceThis = produkty.Find(prod => prod.Id == id);
-                int replaceId = produkty.IndexOf(replaceThis!);
-                produkty[replaceId] = 
-                new ProductGetDto(){
-                    Id = productUpdateDto.Id,
-                    Name = productUpdateDto.Name,
-                    Kcal = productUpdateDto.Kcal,
-                    Carbo = productUpdateDto.Carbo,
-                    Fat = productUpdateDto.Fat,
-                    Proteins = productUpdateDto.Proteins,
-                    Salt = productUpdateDto.Salt,
-                    Sugar = productUpdateDto.Sugar,
-                    Category = "Owoc"
-                };
-            }
-        );
+            dbContext.Products.Add(product);
+            await dbContext.SaveChangesAsync();
 
-        prodGroup.MapDelete("/{id}", (int id) => produkty.RemoveAll(prod => prod.Id == id));
+            return Results.CreatedAtRoute(GetProductEndointName,product.Id,product.ToGetDto());
+        });
 
+        prodGroup.MapPut("/{id}", async (int id, ProductUpdateDto productUpdateDto, GulbeeContext dbContext) => 
+        {
+            Product? product = await dbContext.Products.FindAsync(id);
+            if(product is null) return Results.NotFound();
+            dbContext.Entry(product)
+                     .CurrentValues
+                     .SetValues(productUpdateDto.ToEntity(id));
+            await dbContext.SaveChangesAsync();
+        });
 
+        prodGroup.MapDelete("/{id}", async (int id, GulbeeContext dbContext) => 
+        {
+            await dbContext.Products
+                           .Where(p => p.Id == id)
+                           .ExecuteDeleteAsync();
+            return Results.NoContent();
+        });
         return app;
     }
 }

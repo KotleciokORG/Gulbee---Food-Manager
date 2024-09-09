@@ -1,7 +1,6 @@
 namespace Gulbee.Api.Dto;
 
-public record ProductUpdateDto(){ //klient do mnie
-    public int Id;
+public record ProductUpdateDto{ //klient do mnie
     public required string Name;
     public int Kcal;
     public double Fat;

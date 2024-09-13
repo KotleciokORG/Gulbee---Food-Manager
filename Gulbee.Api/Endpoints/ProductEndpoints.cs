@@ -9,12 +9,13 @@ namespace Gulbee.Api.Endpoints;
 public static class ProductEndpoints{
 
     private static string GetProductEndointName = "GetProduct";
-    public static  async WebApplication MapProductEndpoints(this WebApplication app){
+    public static WebApplication MapProductEndpoints(this WebApplication app){
         var prodGroup = app.MapGroup("products");
 
         prodGroup.MapGet("/", async (GulbeeContext dbContext) => 
         {
             return await dbContext.Products
+                        .Include((Product p) => p.Category)
                         .Select((Product p) => p.ToGetDto())
                         .AsNoTracking()
                         .ToListAsync(); 
@@ -22,7 +23,9 @@ public static class ProductEndpoints{
 
         prodGroup.MapGet("/{id}", async (int id, GulbeeContext dbContext) => 
         {
-            Product? product = await dbContext.Products.FindAsync(id);
+            Product? product = await dbContext.Products
+                                              .Include((Product p) => p.Category)
+                                              .SingleAsync(p => p.Id == id);
             return product is null ? 
                 Results.NotFound() : Results.Ok(product.ToGetDto());
         }).WithName(GetProductEndointName);
@@ -30,6 +33,7 @@ public static class ProductEndpoints{
         prodGroup.MapPost("/", async (ProductPostDto productPostDto, GulbeeContext dbContext) => 
         {
             Product product = productPostDto.ToEntity();
+            //product.Category = await dbContext.Categories.FindAsync(product.CategoryId);
 
             dbContext.Products.Add(product);
             await dbContext.SaveChangesAsync();
@@ -45,6 +49,7 @@ public static class ProductEndpoints{
                      .CurrentValues
                      .SetValues(productUpdateDto.ToEntity(id));
             await dbContext.SaveChangesAsync();
+            return Results.NoContent();
         });
 
         prodGroup.MapDelete("/{id}", async (int id, GulbeeContext dbContext) => 
@@ -54,6 +59,7 @@ public static class ProductEndpoints{
                            .ExecuteDeleteAsync();
             return Results.NoContent();
         });
+
         return app;
     }
 }

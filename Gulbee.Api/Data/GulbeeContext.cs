@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Gulbee.Api.Data;
 
 public class GulbeeContext(DbContextOptions<GulbeeContext> options) : DbContext(options){
-    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

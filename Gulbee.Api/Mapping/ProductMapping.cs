@@ -5,16 +5,17 @@ namespace Gulbee.Api.Mapping;
 
 public static class ProductMapping{
     public static ProductGetDto ToGetDto(this Product product){
-        return new ProductGetDto(){
-            Name = product.Name,
-            Kcal = product.Kcal,
-            Fat = product.Fat,
-            Carbo = product.Carbo,
-            Sugar = product.Sugar,
-            Proteins = product.Proteins,
-            Salt = product.Salt,
-            Category = product.Category!.Name //may be null!
-        };
+        return new ProductGetDto(
+            product.Id,
+            product.Name,
+            product.Kcal,
+            product.Fat,
+            product.Carbo,
+            product.Sugar,
+            product.Proteins,
+            product.Salt,
+            product.Category!.Name //may be null!
+        );
     }
 
     public static Product ToEntity(this ProductPostDto productPostDto){

@@ -7,7 +7,8 @@ builder.Services.AddSqlite<GulbeeContext>("Data Source=Gulbee.db");
 
 var app = builder.Build();
 
-await app.MigrateDbAsync();
 app.MapProductEndpoints();
+
+await app.MigrateDbAsync();
 
 app.Run();

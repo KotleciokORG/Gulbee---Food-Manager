@@ -22,19 +22,19 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:5109/products/1
+PUT http://localhost:5109/products/5
 Content-Type: application/json
 
 {
     "Name": "Ciastko",
-    "Kcal": "400",
-    "Carbo": "10d",
-    "Fat": "3d",
-    "Proteins": "5d",
-    "Salt": "0d",
-    "Sugar": "2d",
-    "CategoryId": "1"
+    "Kcal": 400,
+    "Carbo": 10.0,
+    "Fat": 3.2,
+    "Proteins": 5.2,
+    "Salt": 0.2,
+    "Sugar": 2.2,
+    "CategoryId": 1
 }
 
 ###
-DELETE http://localhost:5109/products/3
+DELETE http://localhost:5109/products/4

@@ -62,15 +62,15 @@ else{
             <div class="column">
                 <div class="d-flex justify-content-center">
                     <EditForm 
-                        Model="productGuess" 
-                        OnSubmit="SubmitAsync" 
+                        Model="@productGuess" 
+                        OnValidSubmit="SubmitAsync" 
                         FormName="ProductForm"
                         Enhance>
                         <DataAnnotationsValidator />
                         <ValidationSummary />
                         <div>
-                            <label class="form-label">Your guess:</label>
-                            <InputText type="text" class="form-control" 
+                            <label for="name" class="form-label">Your guess:</label>
+                            <InputText id="name" type="text" class="form-control" 
                                        @bind-Value="productGuess.Name" />
                         </div>
                         <div>
@@ -97,7 +97,7 @@ else{
         product = await ProductClient.GetProductAsync(rng.Next(1, productCount));
         productGuess = new();
     }
-    private async void SubmitAsync()
+    private async Task SubmitAsync()
     {
         ArgumentNullException.ThrowIfNull(productGuess);
         ArgumentNullException.ThrowIfNull(product);
@@ -111,7 +111,9 @@ else{
         }
         else{
             guessSuccess = false;
+            await Task.Delay(3000);
         }
+        guessSuccess = null;
     }
 
     public class ProductGuess

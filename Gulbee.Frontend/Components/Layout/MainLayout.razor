@@ -1,11 +1,14 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="d-flex flex-column min-vh-100">
-    <Navbar />
-    
-    <div class="container-fluid flex-grow-1 d-flex flex-column justify-content-center align-items-center bg-dark text-white">
-        @Body
+<div class="d-flex flex-column vh-100 align-items-stretch">
+    <div>
+        <Navbar />
     </div>
     
-    <Footer />
+    <div class="container-fluid p-3 flex-grow-1 bg-dark text-white">
+        @Body
+    </div>
+    <div>
+        <Footer />
+    </div>
 </div>

@@ -4,6 +4,9 @@ namespace Gulbee.Frontend.Clients;
 
 public class ProductClient(HttpClient httpClient)
 {
+    public async Task<int> CountProductsAsync(){
+        return (await httpClient.GetFromJsonAsync<Product[]>("products") ?? []).Length;
+    }
     public async Task<Product[]> GetProductAsync(){
         return await httpClient.GetFromJsonAsync<Product[]>("products") 
         ?? [];

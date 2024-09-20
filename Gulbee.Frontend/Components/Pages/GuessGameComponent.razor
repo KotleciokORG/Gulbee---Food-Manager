@@ -2,11 +2,12 @@
 
 @using Gulbee.Frontend.Clients
 @using Gulbee.Frontend.Models
+@using System.ComponentModel.DataAnnotations
 @inject ProductClient ProductClient
 
 <PageTitle>Gulbee!</PageTitle>
 
-@if(product is null){
+@if(product is null || productGuess is null){
     <p>Loading...</p>
 }
 else{
@@ -14,11 +15,23 @@ else{
     <div class="container d-flex flex-column h-100 justify-content-start" >
         <div class="row m-3">
             <div class="column">
-                <div class="d-flex justify-content-center">
+                <div class="d-flex flex-column justify-content-center align-items-center">
                     <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
                         style="background-color: #5e0fdc; color: #f6e0f5;">
                         Guess that product!
                     </span>
+                    @if(guessSuccess is not null){
+                        @if(guessSuccess == true){
+                            <h5 class="text-center p-3 px-4 mt-2 fw-semibold rounded-pill shadow-lg bg-success">
+                                Well done!
+                            </h5>
+                        }
+                        else{
+                            <h5 class="text-center p-3 px-4 mt-2 fw-semibold rounded-pill shadow-lg bg-danger">
+                                Nope!
+                            </h5>
+                        }
+                    }
                 </div>
             </div>
         </div>
@@ -28,7 +41,7 @@ else{
                 <div class="d-flex justify-content-center ">
                     <div class="card my-3 w-25  ">
                         <div class="card-header gulbee-colors text-white">
-                            <h4 class="card-title mb-0">Name: ???</h4>
+                            <h4 class="card-title mb-0">Name: ??? @product.Name</h4>
                             <h5 class="card-subtitle mb-0 text-body-tertiary">Category: @product.Category</h5>
                         </div>
                         <div class="card-body">
@@ -47,20 +60,64 @@ else{
         </div>
         <div class="row m-3">
             <div class="column">
-                Tu wpisz
+                <div class="d-flex justify-content-center">
+                    <EditForm 
+                        Model="productGuess" 
+                        OnSubmit="SubmitAsync" 
+                        FormName="ProductForm"
+                        Enhance>
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div>
+                            <label class="form-label">Your guess:</label>
+                            <InputText type="text" class="form-control" 
+                                       @bind-Value="productGuess.Name" />
+                        </div>
+                        <div>
+                            <button class="btn btn-primary" role="button" type="submit">Submit</button>
+                        </div>
+                    </EditForm>
+                </div>
             </div>
         </div>
-        <div class="row m-3">
-            <div class="column">
-                Tu nacisnij
-            </div>
-        </div>
+        
     </div>    
 }
 
 @code{
+    Random? rng;
     private Product? product;
+    private int productCount;
+    private bool? guessSuccess;
+    [SupplyParameterFromForm] private ProductGuess? productGuess { get; set; }
     protected async override Task OnInitializedAsync(){
-        product = await ProductClient.GetProductAsync(2);
+        rng = new Random();
+        guessSuccess = null;
+        productCount = await ProductClient.CountProductsAsync();
+        product = await ProductClient.GetProductAsync(rng.Next(1, productCount));
+        productGuess = new();
+    }
+    private async void SubmitAsync()
+    {
+        ArgumentNullException.ThrowIfNull(productGuess);
+        ArgumentNullException.ThrowIfNull(product);
+        ArgumentNullException.ThrowIfNullOrEmpty(productGuess.Name);
+        ArgumentNullException.ThrowIfNullOrEmpty(productGuess.Name.Trim());
+
+        if(productGuess.Name.ToLower().Trim() == product.Name || true){
+           guessSuccess = true;
+           await Task.Delay(3000);
+           product = await ProductClient.GetProductAsync(rng!.Next(1, productCount));
+        }
+        else{
+            guessSuccess = false;
+        }
+    }
+
+    public class ProductGuess
+    {
+        [Required]
+        [StringLength(20, ErrorMessage = "Name is too long.")]
+        public string? Name { get; set; }
     }
 }

@@ -10,19 +10,19 @@ POST http://localhost:5109/products
 Content-Type: application/json
 
 {
-    "Name": "Banan",
+    "Name": "Solna Zupa",
     "Kcal": 40,
     "Carbo": 10.0,
     "Fat": 3.2,
     "Proteins": 5.2,
-    "Salt": 0.2,
+    "Salt": 5.2,
     "Sugar": 2.2,
     "CategoryId": 1
 }
 
 ###
 
-PUT http://localhost:5109/products/5
+PUT http://localhost:5109/products/2
 Content-Type: application/json
 
 {

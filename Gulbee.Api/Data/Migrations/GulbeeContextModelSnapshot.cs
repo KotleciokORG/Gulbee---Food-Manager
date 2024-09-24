@@ -38,7 +38,7 @@ namespace Gulbee.Api.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Gulbee.Api.Entities.Product", b =>
+            modelBuilder.Entity("Gulbee.Api.Entities.Nutri", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,18 +47,8 @@ namespace Gulbee.Api.Data.Migrations
                     b.Property<double>("Carbo")
                         .HasColumnType("REAL");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<double>("Fat")
                         .HasColumnType("REAL");
-
-                    b.Property<int>("Kcal")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<double>("Proteins")
                         .HasColumnType("REAL");
@@ -71,19 +61,14 @@ namespace Gulbee.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products");
+                    b.ToTable("Nutritions");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             Carbo = 10.0,
-                            CategoryId = 1,
                             Fat = 3.0,
-                            Kcal = 40,
-                            Name = "Banan",
                             Proteins = 5.0,
                             Salt = 0.0,
                             Sugar = 2.0
@@ -92,10 +77,7 @@ namespace Gulbee.Api.Data.Migrations
                         {
                             Id = 2,
                             Carbo = 10.0,
-                            CategoryId = 1,
                             Fat = 3.0,
-                            Kcal = 40,
-                            Name = "Jabłko",
                             Proteins = 5.0,
                             Salt = 0.0,
                             Sugar = 2.0
@@ -104,13 +86,64 @@ namespace Gulbee.Api.Data.Migrations
                         {
                             Id = 3,
                             Carbo = 10.0,
-                            CategoryId = 1,
                             Fat = 3.0,
-                            Kcal = 40,
-                            Name = "Truskawka",
                             Proteins = 5.0,
                             Salt = 0.0,
                             Sugar = 2.0
+                        });
+                });
+
+            modelBuilder.Entity("Gulbee.Api.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Kcal")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("NutriId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("NutriId");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Kcal = 40,
+                            Name = "Banan",
+                            NutriId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 1,
+                            Kcal = 40,
+                            Name = "Jabłko",
+                            NutriId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 1,
+                            Kcal = 40,
+                            Name = "Truskawka",
+                            NutriId = 3
                         });
                 });
 
@@ -122,7 +155,15 @@ namespace Gulbee.Api.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Gulbee.Api.Entities.Nutri", "Nutri")
+                        .WithMany()
+                        .HasForeignKey("NutriId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Nutri");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,7 +15,6 @@ public static class ProductEndpoints{
         prodGroup.MapGet("/", async (GulbeeContext dbContext) => 
         {
             return await dbContext.Products
-                        .Include((Product p) => p.Category)
                         .Select((Product p) => p.ToGetDto())
                         .AsNoTracking()
                         .ToListAsync(); 
@@ -25,6 +24,7 @@ public static class ProductEndpoints{
         {
             Product? product = await dbContext.Products
                                               .Include((Product p) => p.Category)
+                                              .Include((Product p) => p.Nutri)
                                               .SingleAsync(p => p.Id == id);
             return product is null ? 
                 Results.NotFound() : Results.Ok(product.ToGetDto());
@@ -32,10 +32,14 @@ public static class ProductEndpoints{
 
         prodGroup.MapPost("/", async (ProductPostDto productPostDto, GulbeeContext dbContext) => 
         {
+            Nutri nutritions = productPostDto.GetNutri();
             Product product = productPostDto.ToEntity();
+
+            product.Nutri = nutritions;
             //product.Category = await dbContext.Categories.FindAsync(product.CategoryId);
 
-            dbContext.Products.Add(product);
+            dbContext.Products.Add(product); 
+
             await dbContext.SaveChangesAsync();
 
             return Results.CreatedAtRoute(GetProductEndointName,new {id = product.Id},product.ToGetDto());

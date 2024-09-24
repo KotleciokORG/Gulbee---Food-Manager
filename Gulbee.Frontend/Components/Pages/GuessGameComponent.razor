@@ -75,12 +75,21 @@ else{
                                     @bind-Value="productGuess.Name" />
                             <ValidationMessage For="@(() => productGuess.Name)" class="text-danger" />
                         </div>
-                        
-                        <button class="btn gulbee-colors btn-lg text-white shadow-lg px-5 py-3 rounded-pill" 
-                                role="button" 
-                                type="submit">
-                            Submit!
-                        </button>
+                        @if(guessingHandler.guessSuccess == null){
+                            <button class="btn gulbee-colors btn-lg text-white shadow-lg px-5 py-3 rounded-pill" 
+                                    role="button" 
+                                    type="submit" >
+                                Submit!
+                            </button>
+                        }
+                        else{
+                            <button class="btn gulbee-colors btn-lg text-white shadow-lg px-5 py-3 rounded-pill" 
+                                    role="button" 
+                                    type="submit" 
+                                    disabled>
+                                Submit!
+                            </button>
+                        }
                     </div>
                 </EditForm>
                 

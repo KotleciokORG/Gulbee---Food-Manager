@@ -7,35 +7,11 @@ Strona Domowa
 
 <h3>Przykład pokazywania DIV-a</h3>
 
-<!-- Przycisk do pokazania diva -->
-<button @onclick="ShowDiv">Pokaż div</button>
-
-<!-- Div, który ma być pokazywany -->
-@if (isDivVisible)
-{
-    <div class="alert alert-info">
-        Ten div będzie widoczny przez 3 sekundy.
+<div class="container my-5">
+    <label for="progress-bar" class="form-label">Progress: 47/100</label>
+    <div class="progress">
+        <div class="progress-bar gulbee-colors" role="progressbar" style="width: 47%;" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100">
+            47%
+        </div>
     </div>
-}
-
-@code {
-    // Flaga kontrolująca widoczność div-a
-    private bool isDivVisible = false;
-
-    // Funkcja wywoływana po kliknięciu przycisku
-    private async Task ShowDiv()
-    {
-        // Ustaw div na widoczny
-        isDivVisible = true;
-        // Odśwież komponent
-        await InvokeAsync(StateHasChanged);
-
-        // Czekaj 3 sekundy
-        await Task.Delay(3000);
-
-        // Ukryj div po 3 sekundach
-        isDivVisible = false;
-        // Odśwież komponent
-        await InvokeAsync(StateHasChanged);
-    }
-}
+</div>

@@ -1,10 +1,12 @@
+using Gulbee.Frontend.Clients;
 using Gulbee.Frontend.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+                .AddInteractiveServerComponents();
+builder.Services.AddHttpClient<ProductClient>(c => c.BaseAddress = new Uri("http://localhost:5109"));
 
 var app = builder.Build();
 
@@ -22,6 +24,6 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+   .AddInteractiveServerRenderMode();
 
 app.Run();

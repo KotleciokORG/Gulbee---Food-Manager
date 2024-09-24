@@ -9,5 +9,6 @@ public record ProductGetDto(
     double Sugar,
     double Proteins,
     double Salt,
+    int CategoryId,
     string? Category
 );

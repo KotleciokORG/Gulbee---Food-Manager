@@ -38,7 +38,7 @@ public static class ProductEndpoints{
             dbContext.Products.Add(product);
             await dbContext.SaveChangesAsync();
 
-            return Results.CreatedAtRoute(GetProductEndointName,product.Id,product.ToGetDto());
+            return Results.CreatedAtRoute(GetProductEndointName,new {id = product.Id},product.ToGetDto());
         });
 
         prodGroup.MapPut("/{id}", async (int id, ProductUpdateDto productUpdateDto, GulbeeContext dbContext) => 

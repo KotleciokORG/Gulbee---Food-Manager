@@ -1,7 +1,17 @@
 ﻿@page "/"
+@attribute [StreamRendering]
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+Strona Domowa
 
-Welcome to your new app.
+<h3>Przykład pokazywania DIV-a</h3>
+
+<div class="container my-5">
+    <label for="progress-bar" class="form-label">Progress: 47/100</label>
+    <div class="progress">
+        <div class="progress-bar gulbee-colors" role="progressbar" style="width: 47%;" aria-valuenow="47" aria-valuemin="0" aria-valuemax="100">
+            47%
+        </div>
+    </div>
+</div>

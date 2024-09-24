@@ -1,0 +1,114 @@
+@page "/guess-game"
+@rendermode InteractiveServer
+
+@using Gulbee.Frontend.Clients
+@using Gulbee.Frontend.Models
+@using Gulbee.Frontend.Handlers
+@inject ProductClient ProductClient
+
+<PageTitle>Gulbee!</PageTitle>
+
+@if(guessingHandler is null || guessingHandler.actualProduct is null || productGuess is null){
+    <p>Loading...</p>
+}
+else{
+
+    <div class="container d-flex flex-column h-100 justify-content-start" >
+        <div class="row m-3">
+            <div class="column">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    @if(guessingHandler.guessSuccess == true){
+                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                            style="background-color: #5e0fdc; color: #38c907;">
+                            Well done!
+                        </span>
+                    }
+                    else if (guessingHandler.guessSuccess == false){
+                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                            style="background-color: #5e0fdc; color: #cd0e2b;">
+                            Nope!
+                        </span>
+                    }
+                    else{ //null
+                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                            style="background-color: #5e0fdc; color: #f6e0f5;">
+                            Guess that B**ch!
+                        </span>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <div class="column">
+                <div class="d-flex justify-content-center ">
+                    <div class="card w-25  ">
+                        <div class="card-header gulbee-colors text-white">
+                            <h4 class="card-title mb-0">Name: ??? @guessingHandler.actualProduct.Name</h4>
+                            <h5 class="card-subtitle mb-0 text-body-tertiary">Category: @guessingHandler.actualProduct.Category</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Kcal: @guessingHandler.actualProduct.Kcal</li>
+                            <li class="list-group-item">Fat: @guessingHandler.actualProduct.Fat</li>
+                            <li class="list-group-item">Carbo: @guessingHandler.actualProduct.Carbo</li>
+                            <li class="list-group-item">Sugar: @guessingHandler.actualProduct.Sugar</li>
+                            <li class="list-group-item">Proteins: @guessingHandler.actualProduct.Proteins</li>
+                            <li class="list-group-item">Salt: @guessingHandler.actualProduct.Salt</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row m-3">
+            <div class="column">
+                <EditForm 
+                    Model="@productGuess" 
+                    OnValidSubmit="SubmitAsync" 
+                    FormName="ProductForm"
+                    Enhance>
+                    <DataAnnotationsValidator />
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <div class="mb-3 w-50">
+                            <InputText id="name" type="text" class="form-control form-control-lg" 
+                                    @bind-Value="productGuess.Name" />
+                            <ValidationMessage For="@(() => productGuess.Name)" class="text-danger" />
+                        </div>
+                        @if(guessingHandler.guessSuccess == null){
+                            <button class="btn gulbee-colors btn-lg text-white shadow-lg px-5 py-3 rounded-pill" 
+                                    role="button" 
+                                    type="submit" >
+                                Submit!
+                            </button>
+                        }
+                        else{
+                            <button class="btn gulbee-colors btn-lg text-white shadow-lg px-5 py-3 rounded-pill" 
+                                    role="button" 
+                                    type="submit" 
+                                    disabled>
+                                Submit!
+                            </button>
+                        }
+                    </div>
+                </EditForm>
+                
+            </div>
+        </div>
+        
+    </div>    
+}
+
+@code{
+    GuessingHandler? guessingHandler;
+    [SupplyParameterFromForm] private ProductGuess? productGuess { get; set; }
+    protected async override Task OnInitializedAsync(){
+        productGuess = new();
+        guessingHandler = await GuessingHandler.CreateAsync(ProductClient);
+    }
+    private async Task SubmitAsync()
+    {
+        await guessingHandler!.Submit(productGuess);
+
+    }    
+}

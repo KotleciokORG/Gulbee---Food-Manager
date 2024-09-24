@@ -14,7 +14,8 @@ public static class ProductMapping{
             product.Sugar,
             product.Proteins,
             product.Salt,
-            product.Category!.Name //may be null!
+            product.CategoryId,
+            product.Category is null ? null : product.Category.Name //may be null!
         );
     }
 

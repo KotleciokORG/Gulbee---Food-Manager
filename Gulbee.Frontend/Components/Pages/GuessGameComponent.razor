@@ -42,7 +42,7 @@ else{
         <div class="row m-3">
             <div class="column">
                 <div class="d-flex justify-content-center ">
-                    <div class="card my-3 w-25  ">
+                    <div class="card w-25  ">
                         <div class="card-header gulbee-colors text-white">
                             <h4 class="card-title mb-0">Name: ??? @guessingHandler.actualProduct.Name</h4>
                             <h5 class="card-subtitle mb-0 text-body-tertiary">Category: @guessingHandler.actualProduct.Category</h5>
@@ -63,24 +63,27 @@ else{
         </div>
         <div class="row m-3">
             <div class="column">
-                <div class="d-flex justify-content-center">
-                    <EditForm 
-                        Model="@productGuess" 
-                        OnValidSubmit="SubmitAsync" 
-                        FormName="ProductForm"
-                        Enhance>
-                        <DataAnnotationsValidator />
-                        <ValidationSummary />
-                        <div>
-                            <label for="name" class="form-label">Your guess:</label>
-                            <InputText id="name" type="text" class="form-control" 
-                                       @bind-Value="productGuess.Name" />
+                <EditForm 
+                    Model="@productGuess" 
+                    OnValidSubmit="SubmitAsync" 
+                    FormName="ProductForm"
+                    Enhance>
+                    <DataAnnotationsValidator />
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <div class="mb-3 w-50">
+                            <InputText id="name" type="text" class="form-control form-control-lg" 
+                                    @bind-Value="productGuess.Name" />
+                            <ValidationMessage For="@(() => productGuess.Name)" class="text-danger" />
                         </div>
-                        <div>
-                            <button class="m-2 btn gulbee-colors btn-lg text-white shadow-lg px-4 py-2 rounded-pill" role="button" type="submit">Submit!</button>
-                        </div>
-                    </EditForm>
-                </div>
+                        
+                        <button class="btn gulbee-colors btn-lg text-white shadow-lg px-5 py-3 rounded-pill" 
+                                role="button" 
+                                type="submit">
+                            Submit!
+                        </button>
+                    </div>
+                </EditForm>
+                
             </div>
         </div>
         

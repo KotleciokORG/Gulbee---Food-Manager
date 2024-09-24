@@ -4,17 +4,37 @@
 
 Strona Domowa
 
-<div class="card my-3">
-  <div class="card-header bg-primary text-white">
-    <h3 class="card-title mb-0">Auto: BMW</h3>
-  </div>
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item"><strong>Marka:</strong> BMW</li>
-      <li class="list-group-item"><strong>Model:</strong> X5</li>
-      <li class="list-group-item"><strong>Rocznik:</strong> 2020</li>
-      <li class="list-group-item"><strong>Kolor:</strong> Czarny</li>
-      <li class="list-group-item"><strong>Silnik:</strong> 3.0L Diesel</li>
-    </ul>
-  </div>
-</div>
+<h3>Przykład pokazywania DIV-a</h3>
+
+<!-- Przycisk do pokazania diva -->
+<button @onclick="ShowDiv">Pokaż div</button>
+
+<!-- Div, który ma być pokazywany -->
+@if (isDivVisible)
+{
+    <div class="alert alert-info">
+        Ten div będzie widoczny przez 3 sekundy.
+    </div>
+}
+
+@code {
+    // Flaga kontrolująca widoczność div-a
+    private bool isDivVisible = false;
+
+    // Funkcja wywoływana po kliknięciu przycisku
+    private async Task ShowDiv()
+    {
+        // Ustaw div na widoczny
+        isDivVisible = true;
+        // Odśwież komponent
+        await InvokeAsync(StateHasChanged);
+
+        // Czekaj 3 sekundy
+        await Task.Delay(3000);
+
+        // Ukryj div po 3 sekundach
+        isDivVisible = false;
+        // Odśwież komponent
+        await InvokeAsync(StateHasChanged);
+    }
+}

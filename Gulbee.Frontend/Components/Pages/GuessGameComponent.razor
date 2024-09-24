@@ -1,13 +1,14 @@
 @page "/guess-game"
+@rendermode InteractiveServer
 
 @using Gulbee.Frontend.Clients
 @using Gulbee.Frontend.Models
-@using System.ComponentModel.DataAnnotations
+@using Gulbee.Frontend.Handlers
 @inject ProductClient ProductClient
 
 <PageTitle>Gulbee!</PageTitle>
 
-@if(product is null || productGuess is null){
+@if(guessingHandler is null || guessingHandler.actualProduct is null || productGuess is null){
     <p>Loading...</p>
 }
 else{
@@ -16,21 +17,23 @@ else{
         <div class="row m-3">
             <div class="column">
                 <div class="d-flex flex-column justify-content-center align-items-center">
-                    <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
-                        style="background-color: #5e0fdc; color: #f6e0f5;">
-                        Guess that product!
-                    </span>
-                    @if(guessSuccess is not null){
-                        @if(guessSuccess == true){
-                            <h5 class="text-center p-3 px-4 mt-2 fw-semibold rounded-pill shadow-lg bg-success">
-                                Well done!
-                            </h5>
-                        }
-                        else{
-                            <h5 class="text-center p-3 px-4 mt-2 fw-semibold rounded-pill shadow-lg bg-danger">
-                                Nope!
-                            </h5>
-                        }
+                    @if(guessingHandler.guessSuccess == true){
+                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                            style="background-color: #5e0fdc; color: #38c907;">
+                            Well done!
+                        </span>
+                    }
+                    else if (guessingHandler.guessSuccess == false){
+                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                            style="background-color: #5e0fdc; color: #cd0e2b;">
+                            Nope!
+                        </span>
+                    }
+                    else{ //null
+                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                            style="background-color: #5e0fdc; color: #f6e0f5;">
+                            Guess that B**ch!
+                        </span>
                     }
                 </div>
             </div>
@@ -41,17 +44,17 @@ else{
                 <div class="d-flex justify-content-center ">
                     <div class="card my-3 w-25  ">
                         <div class="card-header gulbee-colors text-white">
-                            <h4 class="card-title mb-0">Name: ??? @product.Name</h4>
-                            <h5 class="card-subtitle mb-0 text-body-tertiary">Category: @product.Category</h5>
+                            <h4 class="card-title mb-0">Name: ??? @guessingHandler.actualProduct.Name</h4>
+                            <h5 class="card-subtitle mb-0 text-body-tertiary">Category: @guessingHandler.actualProduct.Category</h5>
                         </div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Kcal: @product.Kcal</li>
-                            <li class="list-group-item">Fat: @product.Fat</li>
-                            <li class="list-group-item">Carbo: @product.Carbo</li>
-                            <li class="list-group-item">Sugar: @product.Sugar</li>
-                            <li class="list-group-item">Proteins: @product.Proteins</li>
-                            <li class="list-group-item">Salt: @product.Salt</li>
+                            <li class="list-group-item">Kcal: @guessingHandler.actualProduct.Kcal</li>
+                            <li class="list-group-item">Fat: @guessingHandler.actualProduct.Fat</li>
+                            <li class="list-group-item">Carbo: @guessingHandler.actualProduct.Carbo</li>
+                            <li class="list-group-item">Sugar: @guessingHandler.actualProduct.Sugar</li>
+                            <li class="list-group-item">Proteins: @guessingHandler.actualProduct.Proteins</li>
+                            <li class="list-group-item">Salt: @guessingHandler.actualProduct.Salt</li>
                             </ul>
                         </div>
                     </div>
@@ -74,7 +77,7 @@ else{
                                        @bind-Value="productGuess.Name" />
                         </div>
                         <div>
-                            <button class="btn btn-primary" role="button" type="submit">Submit</button>
+                            <button class="m-2 btn gulbee-colors btn-lg text-white shadow-lg px-4 py-2 rounded-pill" role="button" type="submit">Submit!</button>
                         </div>
                     </EditForm>
                 </div>
@@ -85,41 +88,15 @@ else{
 }
 
 @code{
-    Random? rng;
-    private Product? product;
-    private int productCount;
-    private bool? guessSuccess;
+    GuessingHandler? guessingHandler;
     [SupplyParameterFromForm] private ProductGuess? productGuess { get; set; }
     protected async override Task OnInitializedAsync(){
-        rng = new Random();
-        guessSuccess = null;
-        productCount = await ProductClient.CountProductsAsync();
-        product = await ProductClient.GetProductAsync(rng.Next(1, productCount));
         productGuess = new();
+        guessingHandler = await GuessingHandler.CreateAsync(ProductClient);
     }
     private async Task SubmitAsync()
     {
-        ArgumentNullException.ThrowIfNull(productGuess);
-        ArgumentNullException.ThrowIfNull(product);
-        ArgumentNullException.ThrowIfNullOrEmpty(productGuess.Name);
-        ArgumentNullException.ThrowIfNullOrEmpty(productGuess.Name.Trim());
+        await guessingHandler!.Submit(productGuess);
 
-        if(productGuess.Name.ToLower().Trim() == product.Name || true){
-           guessSuccess = true;
-           await Task.Delay(3000);
-           product = await ProductClient.GetProductAsync(rng!.Next(1, productCount));
-        }
-        else{
-            guessSuccess = false;
-            await Task.Delay(3000);
-        }
-        guessSuccess = null;
-    }
-
-    public class ProductGuess
-    {
-        [Required]
-        [StringLength(20, ErrorMessage = "Name is too long.")]
-        public string? Name { get; set; }
-    }
+    }    
 }

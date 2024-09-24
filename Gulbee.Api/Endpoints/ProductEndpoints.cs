@@ -56,6 +56,10 @@ public static class ProductEndpoints{
             var prod = productUpdateDto.ToEntity(id);
             var nutri = productUpdateDto.GetNutri();
 
+            int nutriId = product.NutriId;
+            prod.NutriId = nutriId;
+            nutri.Id = nutriId;
+
             dbContext.Entry(product)
                      .CurrentValues
                      .SetValues(prod);
@@ -72,6 +76,9 @@ public static class ProductEndpoints{
             await dbContext.Products
                            .Where(p => p.Id == id)
                            .ExecuteDeleteAsync();
+            await dbContext.Nutritions
+                           .Where(p => p.Id == id)
+                           .ExecuteDeleteAsync(); //it should have the same id
             return Results.NoContent();
         });
 

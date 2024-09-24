@@ -49,9 +49,20 @@ public static class ProductEndpoints{
         {
             Product? product = await dbContext.Products.FindAsync(id);
             if(product is null) return Results.NotFound();
+
+            Nutri? nutritions = await dbContext.Nutritions.FindAsync(product.NutriId);
+            if(nutritions is null) return Results.Conflict();
+            
+            var prod = productUpdateDto.ToEntity(id);
+            var nutri = productUpdateDto.GetNutri();
+
             dbContext.Entry(product)
                      .CurrentValues
-                     .SetValues(productUpdateDto.ToEntity(id));
+                     .SetValues(prod);
+            dbContext.Entry(nutritions)
+                     .CurrentValues
+                     .SetValues(nutri);
+
             await dbContext.SaveChangesAsync();
             return Results.NoContent();
         });

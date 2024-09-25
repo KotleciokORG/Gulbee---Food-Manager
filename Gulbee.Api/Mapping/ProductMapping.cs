@@ -9,25 +9,37 @@ public static class ProductMapping{
             product.Id,
             product.Name,
             product.Kcal,
-            product.Fat,
-            product.Carbo,
-            product.Sugar,
-            product.Proteins,
-            product.Salt,
+            product.Nutri is null ? null : product.Nutri.Fat,
+            product.Nutri is null ? null : product.Nutri.Carbo,
+            product.Nutri is null ? null : product.Nutri.Sugar,
+            product.Nutri is null ? null : product.Nutri.Proteins,
+            product.Nutri is null ? null : product.Nutri.Salt,
             product.CategoryId,
             product.Category is null ? null : product.Category.Name //may be null!
         );
     }
-
-    public static Product ToEntity(this ProductPostDto productPostDto){
-        return new Product(){
-            Name = productPostDto.Name,
-            Kcal = productPostDto.Kcal,
+    public static Nutri GetNutri(this ProductPostDto productPostDto){
+        return new Nutri(){
             Fat = productPostDto.Fat,
             Carbo = productPostDto.Carbo,
             Sugar = productPostDto.Sugar,
             Proteins = productPostDto.Proteins,
             Salt = productPostDto.Salt,
+        };
+    }
+    public static Nutri GetNutri(this ProductUpdateDto productPostDto){
+        return new Nutri(){
+            Fat = productPostDto.Fat,
+            Carbo = productPostDto.Carbo,
+            Sugar = productPostDto.Sugar,
+            Proteins = productPostDto.Proteins,
+            Salt = productPostDto.Salt,
+        };
+    }
+    public static Product ToEntity(this ProductPostDto productPostDto){
+        return new Product(){
+            Name = productPostDto.Name,
+            Kcal = productPostDto.Kcal,
             CategoryId = productPostDto.CategoryId
         };
     }
@@ -36,11 +48,6 @@ public static class ProductMapping{
             Id = id,
             Name = productPostDto.Name,
             Kcal = productPostDto.Kcal,
-            Fat = productPostDto.Fat,
-            Carbo = productPostDto.Carbo,
-            Sugar = productPostDto.Sugar,
-            Proteins = productPostDto.Proteins,
-            Salt = productPostDto.Salt,
             CategoryId = productPostDto.CategoryId
         };
     }

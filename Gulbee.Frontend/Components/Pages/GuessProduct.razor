@@ -1,4 +1,4 @@
-@page "/guess-game"
+@page "/guess-product"
 @rendermode InteractiveServer
 
 @using Gulbee.Frontend.Clients
@@ -66,7 +66,7 @@ else{
                 <EditForm 
                     Model="@productGuess" 
                     OnValidSubmit="SubmitAsync" 
-                    FormName="ProductForm"
+                    FormName="GuessProductForm"
                     Enhance>
                     <DataAnnotationsValidator />
                     <div class="d-flex flex-column align-items-center justify-content-center">

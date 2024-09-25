@@ -13,7 +13,35 @@ public class GulbeeContext(DbContextOptions<GulbeeContext> options) : DbContext(
         modelBuilder.Entity<Category>().HasData(
             new {
                 Id = 1,
-                Name = "Owoc"
+                Name = "Owoce"
+            },
+            new {
+                Id = 2,
+                Name = "Nabiał"
+            },
+            new {
+                Id = 3,
+                Name = "Warzywa"
+            },
+            new {
+                Id = 4,
+                Name = "Mięso"
+            },
+            new {
+                Id = 5,
+                Name = "Zboża"
+            },
+            new {
+                Id = 6,
+                Name = "Fast Food"
+            },
+            new {
+                Id = 7,
+                Name = "Oleje"
+            },
+            new {
+                Id = 8,
+                Name = "Gotowce"
             }
         );
         modelBuilder.Entity<Nutri>().HasData(

@@ -1,118 +1,220 @@
 @page "/add-product"
 @rendermode InteractiveServer
 
+@using Gulbee.Frontend.Clients
 @using Gulbee.Frontend.Models
+@using System.ComponentModel.DataAnnotations
+@inject ProductClient ProductClient
+@inject CategoryClient CategoryClient
+@inject IJSRuntime JS
 
 <PageTitle>Add product</PageTitle>
 
-@if(newProduct is null){
+@if(newProduct is null || categories is null){
     <p>Loading...</p>
 }
 else{
     <div class="container d-flex flex-column h-100 justify-content-start" >
-        <div class="row m-3">
-            <div class="col d-flex justify-content-center">
-                <span class="text-center display-5 p-3 px-5 fw-semibold rounded-pill shadow-lg"
-                    style="background-color: #ff79c6; color: #ffffff;">
-                    Add new product!
-                </span>
-            </div>
-        </div>
-        <div class="row m-3 justify-content-center">
-            <div class="col d-flex justify-content-center">
-                <EditForm 
-                    Model="@newProduct" 
-                    OnValidSubmit="SubmitAsync" 
-                    FormName="AddProductForm"
-                    Enhance>
-                    <div class="card">
-                        <div class="card-header gulbee-colors text-white d-flex flex-column">
-                            <div class="d-flex m-2">
-                                <h4 class="card-title mx-2">Name: </h4>
-                                <InputText id="name" type="text" class="form-control form-control-sm" 
+        <EditForm 
+            Model="@newProduct" 
+            OnValidSubmit="ValidSubmitAsync"
+            OnInvalidSubmit="InvalidSubmitAsync"
+            FormName="AddProductForm"
+            Enhance>
+            <DataAnnotationsValidator />
+            <div class="row m-3">
+                <div class="col-3" />
+                <div class="col-6">
+                    <div class="d-flex justify-content-center">
+                        <div class="card w-75 shadow-lg mb-2">
+                            <div class="card-header gulbee-colors text-white">
+                                <div class="d-flex align-items-center m-2">
+                                    <h4 class="card-title mx-2 col-4 fs-2">Name:</h4>
+                                    <InputText id="name" type="text" class="form-control form-control-lg w-50" 
                                             @bind-Value="newProduct.Name" />
+                                </div>
+                                <div class="d-flex align-items-center m-2">
+                                    <h5 class="card-subtitle mx-2 col-4 text-body-light fs-5">Category:</h5>
+                                    <InputSelect @bind-Value="newProduct.CategoryId" class="form-select form-select-lg w-50">
+                                        <option value="">Select category ...</option>
+                                        @foreach(Category category in categories)
+                                        {
+                                            <option value="@category.Id">
+                                                @category.Name
+                                            </option>
+                                        }
+                                    </InputSelect>
+                                </div>
                             </div>
-                            <div class="d-flex m-2">
-                                <h5 class="card-subtitle mx-2 text-body-tertiary">Category: </h5>
-                                <InputText id="category" type="text" class="form-control form-control-sm" 
-                                            @bind-Value="newProduct.Category" />
+
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    @* Kcal *@
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center m-2">
+                                            <h4 class="card-title mx-2 col-4 fs-5">Kcal:</h4>
+                                            <InputNumber id="kcal" type="int" class="form-control form-control-sm w-50" 
+                                                        @bind-Value="newProduct.Kcal" />
+                                        </div>    
+                                    </li>
+                                    @* Fat *@
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center m-2">
+                                            <h4 class="card-title mx-2 col-4 fs-5">Fat:</h4>
+                                            <InputNumber id="fat" type="int" class="form-control form-control-sm w-50" 
+                                                        @bind-Value="newProduct.Fat" />
+                                        </div>
+                                    </li>
+                                    @* Carbohydrates *@
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center m-2">
+                                            <h4 class="card-title mx-2 col-4 fs-5">Carbo:</h4>
+                                            <InputNumber id="carbo" type="int" class="form-control form-control-sm w-50" 
+                                                        @bind-Value="newProduct.Carbo" />
+                                        </div> 
+                                    </li>
+                                    @* Sugar *@
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center m-2">
+                                            <h4 class="card-title mx-2 col-4 fs-5">Sugar:</h4>
+                                            <InputNumber id="sugar" type="int" class="form-control form-control-sm w-50" 
+                                                        @bind-Value="newProduct.Sugar" />
+                                        </div> 
+                                    </li>
+                                    @* Proteins *@
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center m-2">
+                                            <h4 class="card-title mx-2 col-4 fs-5">Proteins:</h4>
+                                            <InputNumber id="proteins" type="int" class="form-control form-control-sm w-50" 
+                                                        @bind-Value="newProduct.Proteins" />
+                                        </div> 
+                                    </li>
+                                    @* Salt *@
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center m-2">
+                                            <h4 class="card-title mx-2 col-4 fs-5">Salt:</h4>
+                                            <InputNumber id="salt" type="int" class="form-control form-control-sm w-50" 
+                                                        @bind-Value="newProduct.Salt" />
+                                        </div> 
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="d-flex m-2">
-                                    <h4 class="card-title mx-2">Kcal: </h4>
-                                    <InputNumber id="name" type="int" class="form-control form-control-sm" 
-                                                @bind-Value="newProduct.Kcal" />
-                                </div>    
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex m-2">
-                                    <h4 class="card-title mx-2">Fat: </h4>
-                                    <InputNumber id="name" type="int" class="form-control form-control-sm" 
-                                                @bind-Value="newProduct.Fat" />
-                                </div> 
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex m-2">
-                                    <h4 class="card-title mx-2">Carbo: </h4>
-                                    <InputNumber id="name" type="int" class="form-control form-control-sm" 
-                                                @bind-Value="newProduct.Carbo" />
-                                </div> 
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex m-2">
-                                    <h4 class="card-title mx-2">Sugar: </h4>
-                                    <InputNumber id="name" type="int" class="form-control form-control-sm" 
-                                                @bind-Value="newProduct.Sugar" />
-                                </div> 
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex m-2">
-                                    <h4 class="card-title mx-2">Proteins: </h4>
-                                    <InputNumber id="name" type="int" class="form-control form-control-sm" 
-                                                @bind-Value="newProduct.Proteins" />
-                                </div> 
-                            </li>
-                            <li class="list-group-item">
-                                <div class="d-flex m-2">
-                                    <h4 class="card-title mx-2">Salt: </h4>
-                                    <InputNumber id="name" type="int" class="form-control form-control-sm" 
-                                                @bind-Value="newProduct.Salt" />
-                                </div> 
-                            </li>
-                            </ul>
                         </div>
                     </div>
-                </EditForm>
-                
-
+                </div>
+                <div class="col-3">
+                    <ValidationSummary />
+                    <div id="liveAlertPlaceholder"></div>
+                </div>
             </div>
-        </div>
-        <div class="row m-3">
-            <div class="column">
-            
-
+            <div class="row m-3 d-flex justify-content-center">
+                <div class="col-6 d-flex justify-content-center">
+                    @if(buttonDelay == false){
+                        <button class="btn btn-info w-75 text-center fs-2 rounded-pill shadow-lg" role="button"
+                                style="background-color: #ff79c6; color: #ffffff;"
+                                type="submit">
+                            Add new product!
+                        </button>
+                    }
+                    else{
+                        <button class="btn btn-info w-75 text-center fs-2 rounded-pill shadow-lg" role="button"
+                                style="background-color: #ff79c6; color: #ffffff;"
+                                type="submit"
+                                disabled>
+                            Add new product!
+                        </button>
+                    }
+                </div>
             </div>
-        </div>
+        </EditForm> 
     </div>
 }
 
+<script>
+    window.showAlert = (message, type) => {
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = [
+        `<div class="alert alert-${type} alert-dismissible fade show" role="alert">`,
+        `   <div>${message}</div>`,
+        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+        '</div>'
+    ].join('');
 
+    alertPlaceholder.append(wrapper);
+}
+</script>
 
 @code {
-    private Product? newProduct;
-
-    protected override void OnInitialized(){
-        newProduct = new Product{Name = ""};
+    int temp { get; set; }
+    [SupplyParameterFromForm] private NewProduct? newProduct { get; set; }
+    private Product? addedProduct { get; set; }
+    private Category[]? categories { get; set; }
+    private bool buttonDelay { get; set; }
+    protected override async Task OnInitializedAsync(){
+        newProduct = new NewProduct();
+        categories = await CategoryClient.GetCategoryAsync();
+        buttonDelay = false;
     }
-
-    public async Task SubmitAsync()
+    private async Task ShowSuccessAlert()
     {
-        // Obsługa przesyłania produktu - np. zapisywanie do bazy danych lub API
-        await Task.Delay(3);
+        // Wywołanie funkcji showAlert w JavaScript dla alertu sukcesu
+        await JS.InvokeVoidAsync("showAlert", "Product added successfully!", "success");
+    }
+     private async Task ShowErrorAlert()
+    {
+        // Wywołanie funkcji showAlert w JavaScript dla alertu błędu
+        await JS.InvokeVoidAsync("showAlert", "Error adding product!", "danger");
+    }
+    public async Task SubmitAsync(){
+        buttonDelay = true;
+        await Task.Delay(500);
+        buttonDelay = false;
+    }
+    public async Task ValidSubmitAsync()
+    {
+        ArgumentNullException.ThrowIfNull(newProduct);
+        ArgumentException.ThrowIfNullOrEmpty(newProduct.Name);
+        ArgumentException.ThrowIfNullOrWhiteSpace(newProduct.Name);
+
+        addedProduct = new Product{
+            Name = newProduct.Name,
+            Kcal = newProduct.Kcal,
+            Fat = newProduct.Fat,
+            Carbo = newProduct.Carbo,
+            Sugar = newProduct.Sugar,
+            Proteins = newProduct.Proteins,
+            Salt = newProduct.Salt,
+            CategoryId = newProduct.CategoryId
+        };
+        await ProductClient.AddProductAsync(addedProduct);
+
+        addedProduct = null;
+
+        await SubmitAsync();
+        await ShowSuccessAlert();
+    }
+    public async Task InvalidSubmitAsync(){
+        await SubmitAsync();
+        await ShowErrorAlert();
     }
 
-    
+    public class NewProduct{
+        [Required, StringLength(50,MinimumLength = 2)]
+        public string? Name { get; set; }
+        [Required]
+        public int Kcal { get; set; }
+        [Required]
+        public double Fat { get; set; }
+        [Required]
+        public double Carbo { get; set; }
+        [Required]
+        public double Sugar { get; set; }
+        [Required]
+        public double Proteins { get; set; }
+        [Required]
+        public double Salt { get; set; }
+        [Required]
+        public int CategoryId { get; set; }
+    }
 }

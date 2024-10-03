@@ -42,12 +42,14 @@ public static class ProductEndpoints{
             int skipper = rand.Next(0, dbContext.Products.Count());  
 
             //change it to pick random row at server side
-            Product? product = await dbContext.Products
+            //well, I think that EF Core does not have such option
+            Product[]? products = await dbContext.Products
                                               .Include((Product p) => p.Category)
                                               .Include((Product p) => p.Nutri)
-                                              .OrderBy(product => Guid.NewGuid())  
-                                              .Skip(skipper)  
-                                              .FirstAsync();
+                                              .ToArrayAsync();
+            Product? product = products.OrderBy(product => Guid.NewGuid())  
+                   .Skip(skipper)  
+                   .FirstOrDefault();
                                               
             return product is null ? 
                 Results.Problem() : Results.Ok(product.ToGetDto());

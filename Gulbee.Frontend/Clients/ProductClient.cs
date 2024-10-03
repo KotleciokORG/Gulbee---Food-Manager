@@ -5,16 +5,21 @@ namespace Gulbee.Frontend.Clients;
 public class ProductClient(HttpClient httpClient)
 {
     public async Task<int> CountProductsAsync(){
-        return (await httpClient.GetFromJsonAsync<Product[]>("products") ?? []).Length;
+        return await httpClient.GetFromJsonAsync<int>("products/count");
     }
-    public async Task<Product[]> GetProductAsync(){
-        return await httpClient.GetFromJsonAsync<Product[]>("products") 
+    public async Task<Product[]> GetProductsAsync(){
+        return await httpClient.GetFromJsonAsync<Product[]>("products/get") 
         ?? [];
     }
     public async Task<Product> GetProductAsync(int id){
-        return await httpClient.GetFromJsonAsync<Product>($"products/{id}") 
+        return await httpClient.GetFromJsonAsync<Product>($"products/get/{id}") 
         ?? throw new Exception("Item not found");
     }
+    public async Task<Product> GetRandomAsync(){
+        return await httpClient.GetFromJsonAsync<Product>($"products/random") 
+        ?? throw new Exception("Unhandled problem with Random");
+    }
+    
     public async Task AddProductAsync(Product product){
         await httpClient.PostAsJsonAsync("products/",product);
     }

@@ -8,7 +8,7 @@ namespace Gulbee.Api.Endpoints;
 
 public static class CategoryEndpoints{
 
-    private static string GetCategoryEndointName = "GetCategory";
+    //private static string GetCategoryEndointName = "GetCategory";
     public static WebApplication MapCategoryEndpoints(this WebApplication app){
         var prodGroup = app.MapGroup("category");
 

@@ -7,12 +7,10 @@ namespace Gulbee.Frontend.Handlers;
 
 public class GuessingHandler(ProductClient productClient){ 
     //I am not sure if it should be passed like that or from ServiceProvider
-    private Random? rng;
     public Product? actualProduct { get; set; }
     public bool? guessSuccess { get; set; }
     public int productCount { get; set; }
     private async Task<GuessingHandler> InitializeAsync(){
-        rng = new();
         guessSuccess = null;
 
         actualProduct = await PickRandomProduct();
@@ -25,7 +23,7 @@ public class GuessingHandler(ProductClient productClient){
     }
     private async Task<Product> PickRandomProduct(){
         productCount = await productClient.CountProductsAsync();
-        actualProduct = await productClient.GetProductAsync(rng!.Next(1, productCount));
+        actualProduct = await productClient.GetRandomAsync();
         return actualProduct;
     }
     public async Task Submit(ProductGuess? productGuess){

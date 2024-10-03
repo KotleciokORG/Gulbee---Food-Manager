@@ -12,23 +12,46 @@ public static class ProductEndpoints{
     public static WebApplication MapProductEndpoints(this WebApplication app){
         var prodGroup = app.MapGroup("products");
 
-        prodGroup.MapGet("/", async (GulbeeContext dbContext) => 
+        prodGroup.MapGet("/get", async (GulbeeContext dbContext) => 
         {
             return await dbContext.Products
                         .Select((Product p) => p.ToGetDto())
                         .AsNoTracking()
                         .ToListAsync(); 
         });
+        prodGroup.MapGet("/count", async (GulbeeContext dbContext) => 
+        {
+            return await dbContext.Products.CountAsync(); 
+        });
 
-        prodGroup.MapGet("/{id}", async (int id, GulbeeContext dbContext) => 
+
+        prodGroup.MapGet("/get/{id}", async (int id, GulbeeContext dbContext) => 
         {
             Product? product = await dbContext.Products
                                               .Include((Product p) => p.Category)
                                               .Include((Product p) => p.Nutri)
                                               .SingleAsync(p => p.Id == id);
+
             return product is null ? 
                 Results.NotFound() : Results.Ok(product.ToGetDto());
         }).WithName(GetProductEndointName);
+        
+        prodGroup.MapGet("/random", async (GulbeeContext dbContext) => 
+        {
+            Random rand = new Random();  
+            int skipper = rand.Next(0, dbContext.Products.Count());  
+
+            //change it to pick random row at server side
+            Product? product = await dbContext.Products
+                                              .Include((Product p) => p.Category)
+                                              .Include((Product p) => p.Nutri)
+                                              .OrderBy(product => Guid.NewGuid())  
+                                              .Skip(skipper)  
+                                              .FirstAsync();
+                                              
+            return product is null ? 
+                Results.Problem() : Results.Ok(product.ToGetDto());
+        });
 
         prodGroup.MapPost("/", async (ProductPostDto productPostDto, GulbeeContext dbContext) => 
         {

@@ -15,46 +15,22 @@ else{
 
     <div class="container d-flex flex-column h-100 justify-content-start" >
         <div class="row m-3">
-            <div class="column">
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                    @if(guessingHandler.guessSuccess == true){
-                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
-                            style="background-color: #5e0fdc; color: #38c907;">
-                            Well done!
-                        </span>
-                    }
-                    else if (guessingHandler.guessSuccess == false){
-                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
-                            style="background-color: #5e0fdc; color: #cd0e2b;">
-                            Nope!
-                        </span>
-                    }
-                    else{ //null
-                        <span class="text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
-                            style="background-color: #5e0fdc; color: #f6e0f5;">
-                            Guess that B**ch!
-                        </span>
-                    }
-                </div>
-            </div>
-        </div>
-
-        <div class="row m-3">
-            <div class="column">
+            <div class="col-3"></div>
+            <div class="col-6">
                 <div class="d-flex justify-content-center ">
-                    <div class="card w-25  ">
+                    <div class="card w-75  ">
                         <div class="card-header gulbee-colors text-white">
-                            <h4 class="card-title mb-0">Name: ??? @guessingHandler.actualProduct.Name</h4>
-                            <h5 class="card-subtitle mb-0 text-body-tertiary">Category: @guessingHandler.actualProduct.Category</h5>
+                            <h4 class="card-title m-2 fs-2">Name: ??? @guessingHandler.actualProduct.Name</h4>
+                            <h5 class="card-subtitle m-2 text-body-light fs-5">Category: @guessingHandler.actualProduct.Category</h5>
                         </div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Kcal: @guessingHandler.actualProduct.Kcal</li>
-                            <li class="list-group-item">Fat: @guessingHandler.actualProduct.Fat</li>
-                            <li class="list-group-item">Carbo: @guessingHandler.actualProduct.Carbo</li>
-                            <li class="list-group-item">Sugar: @guessingHandler.actualProduct.Sugar</li>
-                            <li class="list-group-item">Proteins: @guessingHandler.actualProduct.Proteins</li>
-                            <li class="list-group-item">Salt: @guessingHandler.actualProduct.Salt</li>
+                            <li class="list-group-item fs-3">Kcal: @guessingHandler.actualProduct.Kcal</li>
+                            <li class="list-group-item fs-3">Fat: @guessingHandler.actualProduct.Fat</li>
+                            <li class="list-group-item fs-3">Carbo: @guessingHandler.actualProduct.Carbo</li>
+                            <li class="list-group-item fs-3">Sugar: @guessingHandler.actualProduct.Sugar</li>
+                            <li class="list-group-item fs-3">Proteins: @guessingHandler.actualProduct.Proteins</li>
+                            <li class="list-group-item fs-3">Salt: @guessingHandler.actualProduct.Salt</li>
                             </ul>
                         </div>
                     </div>
@@ -62,7 +38,8 @@ else{
             </div>
         </div>
         <div class="row m-3">
-            <div class="column">
+            <div class="col-3"></div>
+            <div class="col-6">
                 <EditForm 
                     Model="@productGuess" 
                     OnValidSubmit="SubmitAsync" 
@@ -70,24 +47,32 @@ else{
                     Enhance>
                     <DataAnnotationsValidator />
                     <div class="d-flex flex-column align-items-center justify-content-center">
-                        <div class="mb-3 w-50">
+                        <div class="mb-3 w-75">
                             <InputText id="name" type="text" class="form-control form-control-lg" 
                                     @bind-Value="productGuess.Name" />
                             <ValidationMessage For="@(() => productGuess.Name)" class="text-danger" />
                         </div>
-                        @if(guessingHandler.guessSuccess == null){
-                            <button class="btn gulbee-colors btn-lg text-white shadow-lg px-5 py-3 rounded-pill" 
-                                    role="button" 
-                                    type="submit" >
-                                Submit!
+                        @if(guessingHandler.guessSuccess == true){
+                            <button class="w-50 text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                                style="background-color: #5e0fdc; color: #38c907;"
+                                role="button"
+                                disabled>
+                                Well done!
                             </button>
                         }
-                        else{
-                            <button class="btn gulbee-colors btn-lg text-white shadow-lg px-5 py-3 rounded-pill" 
-                                    role="button" 
-                                    type="submit" 
-                                    disabled>
-                                Submit!
+                        else if (guessingHandler.guessSuccess == false){
+                            <button class="w-50 text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                                style="background-color: #5e0fdc; color: #cd0e2b;"
+                                role="button"
+                                disabled>
+                                Nope!
+                            </button>
+                        }
+                        else{ //null
+                            <button class="w-50 text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
+                                style="background-color: #5e0fdc; color: #f6e0f5;"
+                                role="button">
+                                Guess that!
                             </button>
                         }
                     </div>

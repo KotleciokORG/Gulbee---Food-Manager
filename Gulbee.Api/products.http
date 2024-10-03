@@ -1,8 +1,8 @@
-GET http://localhost:5109/products
+GET http://localhost:5109/products/get
 
 ###
 
-GET http://localhost:5109/products/2
+GET http://localhost:5109/products/random
 
 ###
 

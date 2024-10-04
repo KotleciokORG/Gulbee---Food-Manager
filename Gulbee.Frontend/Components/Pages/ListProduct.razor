@@ -23,11 +23,10 @@ else{
                 <tbody>
                     @foreach(var product in productList){
                         <tr>
-                        <td>@product.Name</td>
-                        <td>@product.Kcal</td>
-                        <td>@product.Category</td>
+                            <td>@product.Name</td>
+                            <td>@product.Kcal</td>
+                            <td>@product.Category</td>
                         </tr>
-
                     }
                     
                 </tbody>
@@ -38,19 +37,15 @@ else{
             <table class="table table-striped table-dark">
             <thead>
                 <tr>
-                <th scope="col">Category Name</th>
+                    <th scope="col">Category Name</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                <td>Mark</td>
-                </tr>
-                <tr>
-                <td>Mark</td>
-                </tr>
-                <tr>
-                <td>Mark</td>
-                </tr>
+                @foreach(var category in categoryList){
+                    <tr>
+                    <td>@category.Name</td>
+                    </tr>
+                }
             </tbody>
             </table>
 
@@ -61,16 +56,18 @@ else{
 
 
 @code{
-    private Product[] productList { get; set; }
-    private Category[] categoryList { get; set; }
+    private Product[]? productList { get; set; }
+    private Category[]? categoryList { get; set; }
 
     override protected async Task OnInitializedAsync(){
         productList = await ProductClient.GetProductsAsync();
         categoryList = await CategoryClient.GetCategoriesAsync();
 
-        @* foreach(var product in productList){
-            product.Category = categoryList.
-        } *@
+        foreach(var product in productList){
+            var cat = (categoryList.Where(c => c.Id == product.CategoryId).FirstOrDefault());
+            ArgumentNullException.ThrowIfNull(cat);
+            product.Category = cat.Name;
+        } 
     }
 
 }

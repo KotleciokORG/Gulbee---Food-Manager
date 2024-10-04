@@ -153,7 +153,7 @@ else{
     private bool buttonDelay { get; set; }
     protected override async Task OnInitializedAsync(){
         newProduct = new NewProduct();
-        categories = await CategoryClient.GetCategoryAsync();
+        categories = await CategoryClient.GetCategoriesAsync();
         buttonDelay = false;
     }
     private async Task ShowSuccessAlert()

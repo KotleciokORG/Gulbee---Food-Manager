@@ -43,6 +43,9 @@ public class GuessingHandler(ProductClient productClient){
         }
         guessSuccess = null;
     }
+    public async Task GiveUp(){
+        actualProduct = await PickRandomProduct();
+    }
 }
 
 public class ProductGuess

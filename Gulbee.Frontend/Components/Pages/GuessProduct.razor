@@ -53,29 +53,40 @@ else{
                                     @bind-Value="productGuess.Name" />
                             <ValidationMessage For="@(() => productGuess.Name)" class="text-danger" />
                         </div>
-                        @if(guessingHandler.guessSuccess == true){
-                            <button class="w-50 text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
-                                style="background-color: #5e0fdc; color: #38c907;"
-                                role="button"
-                                disabled>
-                                Well done!
-                            </button>
-                        }
-                        else if (guessingHandler.guessSuccess == false){
-                            <button class="w-50 text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
-                                style="background-color: #5e0fdc; color: #cd0e2b;"
-                                role="button"
-                                disabled>
-                                Nope!
-                            </button>
-                        }
-                        else{ //null
-                            <button class="w-50 text-center display-5 p-3 px-4 fw-semibold rounded-pill shadow-lg"
-                                style="background-color: #5e0fdc; color: #f6e0f5;"
-                                role="button">
-                                Guess that!
-                            </button>
-                        }
+                        <div class="d-flex w-75 align-items-center justify-content-center">
+                            <div class="col-7 m-2">
+                                @if(guessingHandler.guessSuccess == true){
+                                    <button class="w-100 text-center fs-2 p-3 px-4 fw-semibold rounded-pill shadow-lg text-nowrap"
+                                        style="background-color: #5e0fdc; color: #38c907;"
+                                        role="button"
+                                        disabled>
+                                        Well done!
+                                    </button>
+                                }
+                                else if (guessingHandler.guessSuccess == false){
+                                    <button class="w-100 text-center fs-2 p-3 px-4 fw-semibold rounded-pill shadow-lg text-nowrap"
+                                        style="background-color: #5e0fdc; color: #cd0e2b;"
+                                        role="button"
+                                        disabled>
+                                        Nope!
+                                    </button>
+                                }
+                                else{ //null
+                                    <button class="w-100 text-center fs-2 p-3 px-4 fw-semibold rounded-pill shadow-lg text-nowrap"
+                                        style="background-color: #5e0fdc; color: #f6e0f5;"
+                                        role="button">
+                                        Guess that!
+                                    </button>
+                                }
+                            </div>
+                            <div class="col-5 m-2">
+                                <div class="btn w-100 text-center fs-4 p-1 px-4 fw-semibold rounded-5 shadow-lg text-nowrap"
+                                    style="background-color: #dc5e0f; color: #f6e0f5;"
+                                    @onclick="GiveUp" >
+                                    Give Up!
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </EditForm>
                 
@@ -97,4 +108,9 @@ else{
         await guessingHandler!.Submit(productGuess);
 
     }    
+    private async Task GiveUp()
+    {
+        await guessingHandler!.GiveUp();
+
+    }  
 }

@@ -7,23 +7,17 @@
 namespace Gulbee.Api.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CategorySeed : Migration
+    public partial class SeedCategories : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Name",
-                value: "Owoce");
-
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
+                    { 1, "Owoce" },
                     { 2, "Nabiał" },
                     { 3, "Warzywa" },
                     { 4, "Mięso" },
@@ -37,6 +31,11 @@ namespace Gulbee.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DeleteData(
+                table: "Categories",
+                keyColumn: "Id",
+                keyValue: 1);
+
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
@@ -71,13 +70,6 @@ namespace Gulbee.Api.Data.Migrations
                 table: "Categories",
                 keyColumn: "Id",
                 keyValue: 8);
-
-            migrationBuilder.UpdateData(
-                table: "Categories",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "Name",
-                value: "Owoc");
         }
     }
 }

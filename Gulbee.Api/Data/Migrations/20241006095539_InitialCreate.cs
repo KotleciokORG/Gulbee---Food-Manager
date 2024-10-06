@@ -2,8 +2,6 @@
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Gulbee.Api.Data.Migrations
 {
     /// <inheritdoc />
@@ -68,31 +66,6 @@ namespace Gulbee.Api.Data.Migrations
                         principalTable: "Nutritions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Owoc" });
-
-            migrationBuilder.InsertData(
-                table: "Nutritions",
-                columns: new[] { "Id", "Carbo", "Fat", "Proteins", "Salt", "Sugar" },
-                values: new object[,]
-                {
-                    { 1, 10.0, 3.0, 5.0, 0.0, 2.0 },
-                    { 2, 10.0, 3.0, 5.0, 0.0, 2.0 },
-                    { 3, 10.0, 3.0, 5.0, 0.0, 2.0 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "CategoryId", "Kcal", "Name", "NutriId" },
-                values: new object[,]
-                {
-                    { 1, 1, 40, "Banan", 1 },
-                    { 2, 1, 40, "Jabłko", 2 },
-                    { 3, 1, 40, "Truskawka", 3 }
                 });
 
             migrationBuilder.CreateIndex(

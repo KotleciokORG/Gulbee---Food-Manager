@@ -2,6 +2,7 @@
 using Gulbee.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gulbee.Api.Data.Migrations
 {
     [DbContext(typeof(GulbeeContext))]
-    partial class GulbeeContextModelSnapshot : ModelSnapshot
+    [Migration("20241006100115_SeedChatGPTData")]
+    partial class SeedChatGPTData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");

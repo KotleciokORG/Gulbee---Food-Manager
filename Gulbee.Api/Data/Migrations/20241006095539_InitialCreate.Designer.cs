@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gulbee.Api.Data.Migrations
 {
     [DbContext(typeof(GulbeeContext))]
-    [Migration("20240924153339_InitialCreate")]
+    [Migration("20241006095539_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,13 +32,6 @@ namespace Gulbee.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Owoc"
-                        });
                 });
 
             modelBuilder.Entity("Gulbee.Api.Entities.Nutri", b =>
@@ -65,35 +58,6 @@ namespace Gulbee.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Nutritions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Carbo = 10.0,
-                            Fat = 3.0,
-                            Proteins = 5.0,
-                            Salt = 0.0,
-                            Sugar = 2.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Carbo = 10.0,
-                            Fat = 3.0,
-                            Proteins = 5.0,
-                            Salt = 0.0,
-                            Sugar = 2.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Carbo = 10.0,
-                            Fat = 3.0,
-                            Proteins = 5.0,
-                            Salt = 0.0,
-                            Sugar = 2.0
-                        });
                 });
 
             modelBuilder.Entity("Gulbee.Api.Entities.Product", b =>
@@ -122,32 +86,6 @@ namespace Gulbee.Api.Data.Migrations
                     b.HasIndex("NutriId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 1,
-                            Kcal = 40,
-                            Name = "Banan",
-                            NutriId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Kcal = 40,
-                            Name = "Jabłko",
-                            NutriId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 1,
-                            Kcal = 40,
-                            Name = "Truskawka",
-                            NutriId = 3
-                        });
                 });
 
             modelBuilder.Entity("Gulbee.Api.Entities.Product", b =>

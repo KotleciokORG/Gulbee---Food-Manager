@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gulbee.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+de13d4b815ccbd98c46c375019e832f6b2c5db4c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6fbaf60c07dc3df5ff8c0967582c89bf4d82c24")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gulbee.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gulbee.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

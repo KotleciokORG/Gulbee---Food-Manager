@@ -14,6 +14,7 @@ public static class ProductMapping{
             product.Nutri is null ? null : product.Nutri.Sugar,
             product.Nutri is null ? null : product.Nutri.Proteins,
             product.Nutri is null ? null : product.Nutri.Salt,
+            product.Nutri is null ? null : product.Nutri.Fiber,
             product.CategoryId,
             product.Category is null ? null : product.Category.Name //may be null!
         );
@@ -25,6 +26,7 @@ public static class ProductMapping{
             Sugar = productPostDto.Sugar,
             Proteins = productPostDto.Proteins,
             Salt = productPostDto.Salt,
+            Fiber = productPostDto.Fiber,
         };
     }
     public static Nutri GetNutri(this ProductUpdateDto productPostDto){
@@ -34,6 +36,7 @@ public static class ProductMapping{
             Sugar = productPostDto.Sugar,
             Proteins = productPostDto.Proteins,
             Salt = productPostDto.Salt,
+            Fiber = productPostDto.Fiber,
         };
     }
     public static Product ToEntity(this ProductPostDto productPostDto){

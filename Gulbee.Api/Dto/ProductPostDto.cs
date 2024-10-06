@@ -8,5 +8,6 @@ public record ProductPostDto(
     double Sugar,
     double Proteins,
     double Salt,
+    double Fiber,
     int CategoryId
 );

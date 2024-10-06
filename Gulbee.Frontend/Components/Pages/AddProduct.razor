@@ -97,6 +97,14 @@ else{
                                                         @bind-Value="newProduct.Salt" />
                                         </div> 
                                     </li>
+                                    @* Fiber *@
+                                    <li class="list-group-item">
+                                        <div class="d-flex align-items-center m-2">
+                                            <h4 class="card-title mx-2 col-4 fs-5">Fiber:</h4>
+                                            <InputNumber id="fiber" type="int" class="form-control form-control-sm w-50" 
+                                                        @bind-Value="newProduct.Fiber" />
+                                        </div> 
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -185,6 +193,7 @@ else{
             Sugar = newProduct.Sugar,
             Proteins = newProduct.Proteins,
             Salt = newProduct.Salt,
+            Fiber = newProduct.Fiber,
             CategoryId = newProduct.CategoryId
         };
         await ProductClient.AddProductAsync(addedProduct);
@@ -214,6 +223,8 @@ else{
         public double Proteins { get; set; }
         [Required]
         public double Salt { get; set; }
+        [Required]
+        public double Fiber { get; set; }
         [Required]
         public int CategoryId { get; set; }
     }

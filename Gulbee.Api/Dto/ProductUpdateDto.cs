@@ -8,5 +8,6 @@ public record ProductUpdateDto( //klient do mnie
     double Sugar,
     double Proteins,
     double Salt,
+    double Fiber,
     int CategoryId
 );

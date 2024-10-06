@@ -10,6 +10,7 @@ public class Product{
     public double? Sugar { get; set; }
     public double? Proteins { get; set; }
     public double? Salt { get; set; }
+    public double? Fiber { get; set; }
     public int CategoryId { get; set; }
     public string? Category { get; set; }
 }

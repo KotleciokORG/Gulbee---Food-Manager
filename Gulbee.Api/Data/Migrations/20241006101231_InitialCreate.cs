@@ -33,7 +33,8 @@ namespace Gulbee.Api.Data.Migrations
                     Carbo = table.Column<double>(type: "REAL", nullable: false),
                     Sugar = table.Column<double>(type: "REAL", nullable: false),
                     Proteins = table.Column<double>(type: "REAL", nullable: false),
-                    Salt = table.Column<double>(type: "REAL", nullable: false)
+                    Salt = table.Column<double>(type: "REAL", nullable: false),
+                    Fiber = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {

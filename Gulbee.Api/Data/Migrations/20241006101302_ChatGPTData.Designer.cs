@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gulbee.Api.Data.Migrations
 {
     [DbContext(typeof(GulbeeContext))]
-    [Migration("20241006100115_SeedChatGPTData")]
-    partial class SeedChatGPTData
+    [Migration("20241006101302_ChatGPTData")]
+    partial class ChatGPTData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,6 +88,9 @@ namespace Gulbee.Api.Data.Migrations
                     b.Property<double>("Fat")
                         .HasColumnType("REAL");
 
+                    b.Property<double>("Fiber")
+                        .HasColumnType("REAL");
+
                     b.Property<double>("Proteins")
                         .HasColumnType("REAL");
 
@@ -107,6 +110,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 1,
                             Carbo = 22.84,
                             Fat = 0.33000000000000002,
+                            Fiber = 2.0,
                             Proteins = 1.0900000000000001,
                             Salt = 0.0,
                             Sugar = 12.23
@@ -116,6 +120,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 2,
                             Carbo = 1.28,
                             Fat = 33.140000000000001,
+                            Fiber = 0.0,
                             Proteins = 24.899999999999999,
                             Salt = 1.8,
                             Sugar = 0.5
@@ -125,6 +130,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 3,
                             Carbo = 9.5800000000000001,
                             Fat = 0.23999999999999999,
+                            Fiber = 1.5,
                             Proteins = 0.93000000000000005,
                             Salt = 0.0,
                             Sugar = 4.7400000000000002
@@ -134,6 +140,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 4,
                             Carbo = 0.0,
                             Fat = 13.6,
+                            Fiber = 0.0,
                             Proteins = 27.300000000000001,
                             Salt = 0.10000000000000001,
                             Sugar = 0.0
@@ -143,6 +150,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 5,
                             Carbo = 43.299999999999997,
                             Fat = 4.2000000000000002,
+                            Fiber = 5.0,
                             Proteins = 8.8000000000000007,
                             Salt = 0.5,
                             Sugar = 6.0
@@ -152,6 +160,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 6,
                             Carbo = 30.0,
                             Fat = 15.0,
+                            Fiber = 2.0,
                             Proteins = 17.0,
                             Salt = 1.0,
                             Sugar = 5.0
@@ -161,6 +170,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 7,
                             Carbo = 0.0,
                             Fat = 100.0,
+                            Fiber = 0.0,
                             Proteins = 0.0,
                             Salt = 0.0,
                             Sugar = 0.0
@@ -170,6 +180,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 8,
                             Carbo = 44.0,
                             Fat = 6.0,
+                            Fiber = 1.0,
                             Proteins = 5.0,
                             Salt = 1.5,
                             Sugar = 2.0
@@ -179,6 +190,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 9,
                             Carbo = 13.81,
                             Fat = 0.17000000000000001,
+                            Fiber = 0.80000000000000004,
                             Proteins = 0.26000000000000001,
                             Salt = 0.0,
                             Sugar = 10.390000000000001
@@ -188,6 +200,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 10,
                             Carbo = 3.6000000000000001,
                             Fat = 3.2999999999999998,
+                            Fiber = 0.5,
                             Proteins = 10.0,
                             Salt = 0.10000000000000001,
                             Sugar = 4.7000000000000002
@@ -197,6 +210,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 11,
                             Carbo = 15.23,
                             Fat = 0.14000000000000001,
+                            Fiber = 0.69999999999999996,
                             Proteins = 0.35999999999999999,
                             Salt = 0.0,
                             Sugar = 9.75
@@ -206,6 +220,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 12,
                             Carbo = 3.3799999999999999,
                             Fat = 4.2999999999999998,
+                            Fiber = 1.2,
                             Proteins = 11.119999999999999,
                             Salt = 0.59999999999999998,
                             Sugar = 2.7000000000000002
@@ -215,6 +230,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 13,
                             Carbo = 3.9199999999999999,
                             Fat = 0.20000000000000001,
+                            Fiber = 1.0,
                             Proteins = 0.88,
                             Salt = 0.0,
                             Sugar = 2.6299999999999999
@@ -224,6 +240,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 14,
                             Carbo = 0.0,
                             Fat = 15.0,
+                            Fiber = 0.0,
                             Proteins = 26.0,
                             Salt = 0.10000000000000001,
                             Sugar = 0.0
@@ -233,6 +250,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 15,
                             Carbo = 30.449999999999999,
                             Fat = 1.5,
+                            Fiber = 2.2999999999999998,
                             Proteins = 6.0,
                             Salt = 0.10000000000000001,
                             Sugar = 1.1000000000000001
@@ -242,6 +260,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 16,
                             Carbo = 33.329999999999998,
                             Fat = 10.0,
+                            Fiber = 4.0,
                             Proteins = 11.0,
                             Salt = 1.0,
                             Sugar = 3.0
@@ -251,6 +270,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 17,
                             Carbo = 0.0,
                             Fat = 100.0,
+                            Fiber = 0.0,
                             Proteins = 0.0,
                             Salt = 0.0,
                             Sugar = 0.0
@@ -260,6 +280,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 18,
                             Carbo = 39.0,
                             Fat = 3.0,
+                            Fiber = 3.5,
                             Proteins = 6.0,
                             Salt = 1.5,
                             Sugar = 2.0
@@ -269,6 +290,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 19,
                             Carbo = 11.94,
                             Fat = 0.65000000000000002,
+                            Fiber = 1.6000000000000001,
                             Proteins = 1.2,
                             Salt = 0.0,
                             Sugar = 4.4199999999999999
@@ -278,6 +300,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 20,
                             Carbo = 3.3999999999999999,
                             Fat = 0.29999999999999999,
+                            Fiber = 1.0,
                             Proteins = 16.0,
                             Salt = 0.5,
                             Sugar = 2.7000000000000002
@@ -287,6 +310,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 21,
                             Carbo = 6.0300000000000002,
                             Fat = 0.29999999999999999,
+                            Fiber = 0.59999999999999998,
                             Proteins = 1.0,
                             Salt = 0.0,
                             Sugar = 4.2000000000000002
@@ -296,6 +320,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 22,
                             Carbo = 1.5,
                             Fat = 5.5,
+                            Fiber = 1.1000000000000001,
                             Proteins = 20.0,
                             Salt = 1.5,
                             Sugar = 1.0
@@ -305,6 +330,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 23,
                             Carbo = 71.5,
                             Fat = 3.1000000000000001,
+                            Fiber = 5.2000000000000002,
                             Proteins = 13.300000000000001,
                             Salt = 0.10000000000000001,
                             Sugar = 0.90000000000000002
@@ -314,6 +340,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 24,
                             Carbo = 41.399999999999999,
                             Fat = 15.0,
+                            Fiber = 2.5,
                             Proteins = 3.3999999999999999,
                             Salt = 1.3,
                             Sugar = 0.40000000000000002
@@ -323,6 +350,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 25,
                             Carbo = 0.0,
                             Fat = 100.0,
+                            Fiber = 0.0,
                             Proteins = 0.0,
                             Salt = 0.0,
                             Sugar = 0.0
@@ -332,6 +360,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 26,
                             Carbo = 30.0,
                             Fat = 12.0,
+                            Fiber = 1.8999999999999999,
                             Proteins = 15.0,
                             Salt = 1.8,
                             Sugar = 3.5
@@ -341,6 +370,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 27,
                             Carbo = 7.6799999999999997,
                             Fat = 0.29999999999999999,
+                            Fiber = 1.2,
                             Proteins = 0.67000000000000004,
                             Salt = 0.0,
                             Sugar = 4.8899999999999997
@@ -350,6 +380,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 28,
                             Carbo = 4.9900000000000002,
                             Fat = 0.97999999999999998,
+                            Fiber = 0.40000000000000002,
                             Proteins = 3.3999999999999999,
                             Salt = 0.10000000000000001,
                             Sugar = 5.0
@@ -359,6 +390,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 29,
                             Carbo = 2.1600000000000001,
                             Fat = 0.16,
+                            Fiber = 0.29999999999999999,
                             Proteins = 0.65000000000000002,
                             Salt = 0.0,
                             Sugar = 1.3799999999999999
@@ -368,6 +400,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 30,
                             Carbo = 1.4299999999999999,
                             Fat = 42.0,
+                            Fiber = 0.0,
                             Proteins = 37.0,
                             Salt = 1.8,
                             Sugar = 0.45000000000000001
@@ -377,6 +410,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 31,
                             Carbo = 14.07,
                             Fat = 0.33000000000000002,
+                            Fiber = 1.5,
                             Proteins = 0.81000000000000005,
                             Salt = 0.0,
                             Sugar = 10.02
@@ -386,6 +420,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 32,
                             Carbo = 1.7,
                             Fat = 7.0,
+                            Fiber = 0.0,
                             Proteins = 20.0,
                             Salt = 1.7,
                             Sugar = 0.5
@@ -395,6 +430,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 33,
                             Carbo = 72.569999999999993,
                             Fat = 1.8700000000000001,
+                            Fiber = 3.0,
                             Proteins = 10.67,
                             Salt = 0.01,
                             Sugar = 1.1200000000000001
@@ -404,6 +440,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 34,
                             Carbo = 36.0,
                             Fat = 17.0,
+                            Fiber = 2.3999999999999999,
                             Proteins = 10.0,
                             Salt = 1.5,
                             Sugar = 1.8
@@ -413,6 +450,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 35,
                             Carbo = 0.0,
                             Fat = 100.0,
+                            Fiber = 0.0,
                             Proteins = 0.0,
                             Salt = 0.0,
                             Sugar = 0.0
@@ -422,6 +460,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 36,
                             Carbo = 28.0,
                             Fat = 10.0,
+                            Fiber = 2.0,
                             Proteins = 16.0,
                             Salt = 2.0,
                             Sugar = 3.0
@@ -431,6 +470,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 37,
                             Carbo = 4.8099999999999996,
                             Fat = 0.12,
+                            Fiber = 1.2,
                             Proteins = 0.88,
                             Salt = 0.0,
                             Sugar = 4.7400000000000002
@@ -440,6 +480,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 38,
                             Carbo = 9.6300000000000008,
                             Fat = 0.60999999999999999,
+                            Fiber = 0.80000000000000004,
                             Proteins = 1.1499999999999999,
                             Salt = 0.0,
                             Sugar = 5.4100000000000001
@@ -449,6 +490,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 39,
                             Carbo = 10.449999999999999,
                             Fat = 0.12,
+                            Fiber = 1.6000000000000001,
                             Proteins = 0.91000000000000003,
                             Salt = 0.01,
                             Sugar = 9.0999999999999996
@@ -458,6 +500,7 @@ namespace Gulbee.Api.Data.Migrations
                             Id = 40,
                             Carbo = 2.0,
                             Fat = 48.0,
+                            Fiber = 0.0,
                             Proteins = 30.0,
                             Salt = 2.5,
                             Sugar = 0.69999999999999996

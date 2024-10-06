@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gulbee.Api.Data.Migrations
 {
     [DbContext(typeof(GulbeeContext))]
-    [Migration("20241006095613_SeedCategories")]
-    partial class SeedCategories
+    [Migration("20241006101231_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,48 +32,6 @@ namespace Gulbee.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Owoce"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Nabiał"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Warzywa"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Mięso"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Zboża"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Fast Food"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Oleje"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Gotowce"
-                        });
                 });
 
             modelBuilder.Entity("Gulbee.Api.Entities.Nutri", b =>
@@ -86,6 +44,9 @@ namespace Gulbee.Api.Data.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<double>("Fat")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Fiber")
                         .HasColumnType("REAL");
 
                     b.Property<double>("Proteins")
